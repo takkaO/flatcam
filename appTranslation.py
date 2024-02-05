@@ -30,6 +30,7 @@ languages_dict = {
     'es': 'Spanish',
     'fr': 'French',
     'it': 'Italian',
+    'jp': 'Japanese',
     'pt_BR': 'Brazilian Portuguese',
     'ro': 'Romanian',
     'ru': 'Russian',
