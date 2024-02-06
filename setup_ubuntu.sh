@@ -44,8 +44,6 @@ sudo -H python3 -m pip install --upgrade \
 	qrcode \
 	pyqt5 \
 	reportlab \
-	svglib \
-	pyserial \
-	testresources
+	svglib
 
 sudo -H easy_install -U distribute

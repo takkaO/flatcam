@@ -1,6 +1,7 @@
 import sys
 import os
 
+from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QSettings, Qt
 from app_Main import App
@@ -55,7 +56,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     debug_trace()
-    VisPyPatches.apply_patches()
+    # VisPyPatches.apply_patches()
 
     # apply High DPI support
     settings = QSettings("Open Source", "FlatCAM")
@@ -83,6 +84,7 @@ if __name__ == '__main__':
         QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, False)
 
     app = QtWidgets.QApplication(sys.argv)
+    app.setWindowIcon(QIcon('assets/resources/flatcam_icon256.png'))
 
     # apply style
     settings = QSettings("Open Source", "FlatCAM")

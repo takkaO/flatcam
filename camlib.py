@@ -37,11 +37,12 @@ from shapely.geometry import shape
 # Used for solid polygons in Matplotlib
 from descartes.patch import PolygonPatch
 # ---------------------------------------
-# Fix for python 3.10
+
 try:
     from collections import Iterable
-except ImportError:
+except Exception:
     from collections.abc import Iterable
+
 import rasterio
 from rasterio.features import shapes
 import ezdxf
@@ -1266,7 +1267,7 @@ class Geometry(object):
 
         merged_lines = linemerge(geos_lines)
         geos = geos_polys
-        for l in list(map(LineString, zip(merged_lines.coords[:-1], merged_lines.coords[1:]))):
+        for l in merged_lines:
             geos.append(l)
 
         # Add to object
@@ -3111,8 +3112,6 @@ class CNCjob(Geometry):
         elif zcut == 0:
             self.app.inform.emit('[WARNING] %s.' % _("The Cut Z parameter is zero. There will be no cut, aborting"))
             return 'fail'
-        else:
-            return zcut
 
     # used in Tool Drilling
     def excellon_tool_gcode_gen(self, tool, points, tools, first_pt, is_first=False, is_last=False, opt_type='T',

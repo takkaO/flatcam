@@ -1136,13 +1136,13 @@ class FCDoubleSlider(QtWidgets.QSlider):
         return self.value()
 
     def setMinimum(self, value):
-        return super(FCDoubleSlider, self).setMinimum(int(value * self._multi))
+        return super(FCDoubleSlider, self).setMinimum(value * self._multi)
 
     def setMaximum(self, value):
-        return super(FCDoubleSlider, self).setMaximum(int(value * self._multi))
+        return super(FCDoubleSlider, self).setMaximum(value * self._multi)
 
     def setSingleStep(self, value):
-        return super(FCDoubleSlider, self).setSingleStep(int(value * self._multi))
+        return super(FCDoubleSlider, self).setSingleStep(value * self._multi)
 
     def singleStep(self):
         return float(super(FCDoubleSlider, self).singleStep()) / self._multi
@@ -1155,13 +1155,13 @@ class FCDoubleSlider(QtWidgets.QSlider):
 
     def set_range(self, min, max):
         self.blockSignals(True)
-        self.setRange(int(min * self._multi), int(max * self._multi))
+        self.setRange(min * self._multi, max * self._multi)
         self.blockSignals(False)
 
 
 class FCSliderWithDoubleSpinner(QtWidgets.QFrame):
 
-    def __init__(self, min=0, max=10000.0000, step=1, precision=4, orientation='horizontal', **kwargs):
+    def __init__(self, min=0, max=10000, step=1, precision=4, orientation='horizontal', **kwargs):
         super().__init__(**kwargs)
 
         self.slider = FCDoubleSlider(orientation=orientation)
@@ -4159,7 +4159,7 @@ class FCTextAreaLineNumber(QtWidgets.QFrame):
                         painter.setFont(font)
 
                     # Draw the line number right justified at the position of the line.
-                    paint_rect = QtCore.QRect(0, block_top, number_bar.width(), font_metrics.height())
+                    paint_rect = QtCore.QRect(0, int(block_top), int(number_bar.width()), int(font_metrics.height()))
                     # I add some spaces to the line_count to prettify; make sure to remember adjust the width in the
                     # NumberBar() class above
                     painter.drawText(paint_rect, Qt.AlignRight, ' ' + str(line_count) + '  ')
@@ -4662,7 +4662,8 @@ class FlatCAMSystemTray(QtWidgets.QSystemTrayIcon):
         exitAction = menu.addAction(_("Exit"))
         exitAction.setIcon(QtGui.QIcon(self.app.resource_location + '/power16.png'))
         self.setContextMenu(menu)
-        menu_runscript.triggered.connect(lambda: self.app.f_handlers.on_filerunscript(
+
+        menu_runscript.triggered.connect(lambda: self.app.on_filerunscript(
             silent=True if self.app.cmd_line_headless == 1 else False))
 
         exitAction.triggered.connect(self.app.final_save)

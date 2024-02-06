@@ -20,10 +20,11 @@ from shapely.geometry import box
 from io import StringIO, BytesIO
 try:
     from collections import Iterable
-except ImportError:
+except Exception:
     from collections.abc import Iterable
 import logging
 from copy import deepcopy
+import math
 
 import qrcode
 import qrcode.image.svg

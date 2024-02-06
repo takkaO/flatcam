@@ -165,8 +165,9 @@ class App(QtCore.QObject):
     # ################################### Version and VERSION DATE ##################################################
     # ###############################################################################################################
     # version = "Unstable Version"
-    version = 8.994
-    version_date = "2020/11/7"
+    # version = 8.994
+    version = "8.994 Custom"
+    version_date = "2024/02/06"
     beta = True
 
     engine = '3D'
@@ -292,12 +293,12 @@ class App(QtCore.QObject):
         if sys.platform == 'win32' or sys.platform == 'linux':
             # make sure the thread is stored by using a self. otherwise it's garbage collected
             self.listen_th = QtCore.QThread()
-            self.listen_th.start(priority=QtCore.QThread.LowestPriority)
+            self.listen_th.start(priority=QtCore.QThread.Priority.LowestPriority)
 
             self.new_launch = ArgsThread()
             self.new_launch.open_signal[list].connect(self.on_startup_args)
             self.new_launch.moveToThread(self.listen_th)
-            self.new_launch.start.emit()
+            self.new_launch.start.emit()    # noqa
 
         # ############################################################################################################
         # ########################################## OS-specific #####################################################
@@ -310,6 +311,12 @@ class App(QtCore.QObject):
                 self.log.debug("Win32!")
             else:
                 self.log.debug("Win64!")
+
+            # #######################################################################################################
+            # ####### Set AppUserModelID for Showing Taskbar Icon ###################################################
+            # #######################################################################################################
+            app_user_model_id = 'FlatCAM_' + self.version # arbitrary string
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_user_model_id)
 
             # #######################################################################################################
             # ####### CONFIG FILE WITH PARAMETERS REGARDING PORTABILITY #############################################
@@ -590,15 +597,16 @@ class App(QtCore.QObject):
         # add ToolTips for the Preprocessor ComboBoxes in Preferences
         for it in range(self.ui.tools_defaults_form.tools_solderpaste_group.pp_combo.count()):
             self.ui.tools_defaults_form.tools_solderpaste_group.pp_combo.setItemData(
-                it, self.ui.tools_defaults_form.tools_solderpaste_group.pp_combo.itemText(it), QtCore.Qt.ToolTipRole)
+                it, self.ui.tools_defaults_form.tools_solderpaste_group.pp_combo.itemText(it),
+                QtCore.Qt.ItemDataRole.ToolTipRole)
         for it in range(self.ui.geometry_defaults_form.geometry_opt_group.pp_geometry_name_cb.count()):
             self.ui.geometry_defaults_form.geometry_opt_group.pp_geometry_name_cb.setItemData(
                 it, self.ui.geometry_defaults_form.geometry_opt_group.pp_geometry_name_cb.itemText(it),
-                QtCore.Qt.ToolTipRole)
+                QtCore.Qt.ItemDataRole.ToolTipRole)
         for it in range(self.ui.tools_defaults_form.tools_drill_group.pp_excellon_name_cb.count()):
             self.ui.tools_defaults_form.tools_drill_group.pp_excellon_name_cb.setItemData(
                 it, self.ui.tools_defaults_form.tools_drill_group.pp_excellon_name_cb.itemText(it),
-                QtCore.Qt.ToolTipRole)
+                QtCore.Qt.ItemDataRole.ToolTipRole)
 
         # ###########################################################################################################
         # ##################################### UPDATE PREFERENCES GUI FORMS ########################################
@@ -2493,11 +2501,11 @@ class App(QtCore.QObject):
                 msgbox.setText(_("Do you want to save the edited object?"))
                 msgbox.setWindowTitle(_("Exit Editor"))
                 msgbox.setWindowIcon(QtGui.QIcon(self.resource_location + '/save_as.png'))
-                msgbox.setIcon(QtWidgets.QMessageBox.Question)
+                msgbox.setIcon(QtWidgets.QMessageBox.Icon.Question)
 
-                bt_yes = msgbox.addButton(_('Yes'), QtWidgets.QMessageBox.YesRole)
-                bt_no = msgbox.addButton(_('No'), QtWidgets.QMessageBox.NoRole)
-                bt_cancel = msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.RejectRole)
+                bt_yes = msgbox.addButton(_('Yes'), QtWidgets.QMessageBox.ButtonRole.YesRole)
+                bt_no = msgbox.addButton(_('No'), QtWidgets.QMessageBox.ButtonRole.NoRole)
+                bt_cancel = msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.ButtonRole.RejectRole)
 
                 msgbox.setDefaultButton(bt_yes)
                 msgbox.exec_()
@@ -2907,9 +2915,10 @@ class App(QtCore.QObject):
                 QtWidgets.QDialog.__init__(self, parent)
 
                 self.app = app
+                self.app_icon = self.app.ui.app_icon
 
                 # Icon and title
-                self.setWindowIcon(parent.app_icon)
+                self.setWindowIcon(self.app_icon)
                 self.setWindowTitle(_("About"))
                 self.resize(600, 200)
                 # self.setStyleSheet("background-image: url(share/flatcam_icon256.png); background-attachment: fixed")
@@ -3055,7 +3064,7 @@ class App(QtCore.QObject):
                 self.splash_tab_layout.addWidget(title, stretch=1)
 
                 pal = QtGui.QPalette()
-                pal.setColor(QtGui.QPalette.Background, Qt.white)
+                pal.setColor(QtGui.QPalette.ColorRole.Background, Qt.white)
 
                 self.prog_grid_lay = QtWidgets.QGridLayout()
                 self.prog_grid_lay.setHorizontalSpacing(20)
@@ -3227,6 +3236,7 @@ class App(QtCore.QObject):
                 QtWidgets.QDialog.__init__(self, parent)
 
                 self.app = app
+                self.app_icon = self.app.ui.app_icon
 
                 open_source_link = "<a href = 'https://opensource.org/'<b>Open Source</b></a>"
                 new_features_link = "<a href = 'https://bitbucket.org/jpcgt/flatcam/pull-requests/'" \
@@ -3237,7 +3247,7 @@ class App(QtCore.QObject):
                                 "donations&business=WLTJJ3Q77D98L&currency_code=USD&source=url'<b>click</b></a>"
 
                 # Icon and title
-                self.setWindowIcon(parent.app_icon)
+                self.setWindowIcon(self.app_icon)
                 self.setWindowTitle('%s ...' % _("How To"))
                 self.resize(750, 375)
 
@@ -3307,7 +3317,7 @@ class App(QtCore.QObject):
 
                 # palette
                 pal = QtGui.QPalette()
-                pal.setColor(QtGui.QPalette.Background, Qt.white)
+                pal.setColor(QtGui.QPalette.ColorRole.Background, Qt.white)
 
                 # layouts
                 main_layout = QtWidgets.QVBoxLayout()
@@ -3365,7 +3375,8 @@ class App(QtCore.QObject):
                 links_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
                 links_scroll_area.setPalette(pal)
 
-                self.links_lay.addWidget(QtWidgets.QLabel('%s' % _("Soon ...")), alignment=QtCore.Qt.AlignCenter)
+                self.links_lay.addWidget(QtWidgets.QLabel('%s' % _("Soon ...")),
+                                         alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
                 self.links_tab_layout.addWidget(links_scroll_area)
 
                 # HOW TO section
@@ -3384,7 +3395,8 @@ class App(QtCore.QObject):
                 howto_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
                 howto_scroll_area.setPalette(pal)
 
-                self.howto_lay.addWidget(QtWidgets.QLabel('%s' % _("Soon ...")), alignment=QtCore.Qt.AlignCenter)
+                self.howto_lay.addWidget(QtWidgets.QLabel('%s' % _("Soon ...")),
+                                         alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
                 self.howto_tab_layout.addWidget(howto_scroll_area)
 
                 # BUTTONS section
@@ -3493,9 +3505,9 @@ class App(QtCore.QObject):
 
         msgbox.setWindowTitle(_("Alternative website"))
         msgbox.setWindowIcon(QtGui.QIcon(self.resource_location + '/globe16.png'))
-        msgbox.setIcon(QtWidgets.QMessageBox.Question)
+        msgbox.setIcon(QtWidgets.QMessageBox.Icon.Question)
 
-        bt_yes = msgbox.addButton(_('Close'), QtWidgets.QMessageBox.YesRole)
+        bt_yes = msgbox.addButton(_('Close'), QtWidgets.QMessageBox.ButtonRole.YesRole)
 
         msgbox.setDefaultButton(bt_yes)
         msgbox.exec_()
@@ -3520,11 +3532,11 @@ class App(QtCore.QObject):
                              "Do you want to Save the project?"))
             msgbox.setWindowTitle(_("Save changes"))
             msgbox.setWindowIcon(QtGui.QIcon(self.resource_location + '/save_as.png'))
-            msgbox.setIcon(QtWidgets.QMessageBox.Question)
+            msgbox.setIcon(QtWidgets.QMessageBox.Icon.Question)
 
-            bt_yes = msgbox.addButton(_('Yes'), QtWidgets.QMessageBox.YesRole)
-            bt_no = msgbox.addButton(_('No'), QtWidgets.QMessageBox.NoRole)
-            bt_cancel = msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.RejectRole)
+            bt_yes = msgbox.addButton(_('Yes'), QtWidgets.QMessageBox.ButtonRole.YesRole)
+            bt_no = msgbox.addButton(_('No'), QtWidgets.QMessageBox.ButtonRole.NoRole)
+            bt_cancel = msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.ButtonRole.RejectRole)
 
             msgbox.setDefaultButton(bt_yes)
             msgbox.exec_()
@@ -3535,7 +3547,7 @@ class App(QtCore.QObject):
                     self.trayIcon.hide()
                 except Exception:
                     pass
-                self.on_file_saveprojectas(use_thread=True, quit_action=True)
+                self.f_handlers.on_file_saveprojectas(use_thread=True, quit_action=True)
             elif response == bt_no:
                 try:
                     self.trayIcon.hide()
@@ -3643,7 +3655,7 @@ class App(QtCore.QObject):
         try:
             # self.new_launch.thread_exit = True
             # self.new_launch.listener.close()
-            self.new_launch.stop.emit()
+            self.new_launch.stop.emit()     # noqa
         except Exception as err:
             self.log.debug("App.quit_application() --> %s" % str(err))
 
@@ -4462,13 +4474,13 @@ class App(QtCore.QObject):
         msgbox = QtWidgets.QMessageBox()
         msgbox.setWindowTitle(_("Toggle Units"))
         msgbox.setWindowIcon(QtGui.QIcon(self.resource_location + '/toggle_units32.png'))
-        msgbox.setIcon(QtWidgets.QMessageBox.Question)
+        msgbox.setIcon(QtWidgets.QMessageBox.Icon.Question)
 
         msgbox.setText(_("Changing the units of the project\n"
                          "will scale all objects.\n\n"
                          "Do you want to continue?"))
-        bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.AcceptRole)
-        msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.RejectRole)
+        bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+        msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.ButtonRole.RejectRole)
 
         msgbox.setDefaultButton(bt_ok)
         msgbox.exec_()
@@ -4629,9 +4641,9 @@ class App(QtCore.QObject):
                                      "Go to Preferences -> General - Show Advanced Options."))
                     msgbox.setWindowTitle("Tool adding ...")
                     msgbox.setWindowIcon(QtGui.QIcon(self.resource_location + '/warning.png'))
-                    msgbox.setIcon(QtWidgets.QMessageBox.Warning)
+                    msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
 
-                    bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.AcceptRole)
+                    bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
 
                     msgbox.setDefaultButton(bt_ok)
                     msgbox.exec_()
@@ -4715,13 +4727,13 @@ class App(QtCore.QObject):
                 msgbox = QtWidgets.QMessageBox()
                 msgbox.setWindowTitle(_("Delete objects"))
                 msgbox.setWindowIcon(QtGui.QIcon(self.resource_location + '/deleteshape32.png'))
-                msgbox.setIcon(QtWidgets.QMessageBox.Question)
+                msgbox.setIcon(QtWidgets.QMessageBox.Icon.Question)
 
                 # msgbox.setText("<B>%s</B>" % _("Change project units ..."))
                 msgbox.setText(_("Are you sure you want to permanently delete\n"
                                  "the selected objects?"))
-                bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.AcceptRole)
-                msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.RejectRole)
+                bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+                msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.ButtonRole.RejectRole)
 
                 msgbox.setDefaultButton(bt_ok)
                 msgbox.exec_()
@@ -4826,7 +4838,7 @@ class App(QtCore.QObject):
 
         # first disconnect it as it may have been used by something else
         try:
-            self.replot_signal.disconnect()
+            self.replot_signal.disconnect()     # noqa
         except TypeError:
             pass
         self.replot_signal[list].connect(origin_replot)
@@ -4869,7 +4881,7 @@ class App(QtCore.QObject):
                             obj_name=out_name, filename=None, local_use=obj, use_thread=False)
 
                 if noplot_sig is False:
-                    self.replot_signal.emit([])
+                    self.replot_signal.emit([])     # noqa
 
         if location is not None:
             if len(location) != 2:
@@ -5021,7 +5033,7 @@ class App(QtCore.QObject):
         else:
             location = custom_location
 
-        self.jump_signal.emit(location)
+        self.jump_signal.emit(location)     # noqa
 
         if fit_center:
             self.plotcanvas.fit_center(loc=location)
@@ -5133,7 +5145,7 @@ class App(QtCore.QObject):
                 self.form.addRow(self.ref_radio)
 
                 self.button_box = QtWidgets.QDialogButtonBox(
-                    QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
+                    QtWidgets.QDialogButtonBox.StandardButton.Ok | QtWidgets.QDialogButtonBox.StandardButton.Cancel,
                     Qt.Horizontal, parent=self)
                 self.form.addRow(self.button_box)
 
@@ -5175,7 +5187,7 @@ class App(QtCore.QObject):
             cy = loc_b[1] + ((loc_b[3] - loc_b[1]) / 2)
             location = (cx, cy)
 
-        self.locate_signal.emit(location, location_point)
+        self.locate_signal.emit(location, location_point)   # noqa
 
         if fit_center:
             self.plotcanvas.fit_center(loc=location)
@@ -5279,7 +5291,7 @@ class App(QtCore.QObject):
                 if obj.tools:
                     obj_init.tools = deepcopy(obj.tools)
             except Exception as err:
-                app_obj.debug("App.on_copy_command() --> %s" % str(err))
+                app_obj.log.debug("App.on_copy_command() --> %s" % str(err))
 
             try:
                 obj_init.source_file = deepcopy(obj.source_file)
@@ -7548,7 +7560,7 @@ class App(QtCore.QObject):
         # Tree Widget
         d_properties_tw = FCTree(columns=2)
         d_properties_tw.setObjectName("default_properties")
-        d_properties_tw.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        d_properties_tw.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         d_properties_tw.setStyleSheet("QTreeWidget {border: 0px;}")
 
         root = d_properties_tw.invisibleRootItem()
@@ -7698,7 +7710,7 @@ class App(QtCore.QObject):
             plot_container = self.ui.right_layout
 
         modifier = QtWidgets.QApplication.queryKeyboardModifiers()
-        if self.is_legacy is True or modifier == QtCore.Qt.ControlModifier:
+        if self.is_legacy is True or modifier == QtCore.Qt.KeyboardModifier.ControlModifier:
             self.is_legacy = True
             self.defaults["global_graphic_engine"] = "2D"
             self.plotcanvas = PlotCanvasLegacy(plot_container, self)
@@ -8129,7 +8141,7 @@ class App(QtCore.QObject):
         """
 
         if self.block_autosave is False and self.should_we_save is True and self.save_in_progress is False:
-            self.on_file_saveproject()
+            self.f_handlers.on_file_saveproject()
 
     def save_project_auto_update(self):
         """
@@ -8215,8 +8227,8 @@ class ArgsThread(QtCore.QObject):
         self.listener = None
         self.thread_exit = False
 
-        self.start.connect(self.run)
-        self.stop.connect(self.close_listener)
+        self.start.connect(self.run)    # noqa
+        self.stop.connect(self.close_listener)      # noqa
 
     def my_loop(self, address):
         try:
@@ -8251,7 +8263,7 @@ class ArgsThread(QtCore.QObject):
             msg = conn.recv()
             if msg == 'close':
                 break
-            self.open_signal.emit(msg)
+            self.open_signal.emit(msg)  # noqa
         conn.close()
 
     # the decorator is a must; without it this technique will not work unless the start signal is connected
@@ -8329,7 +8341,7 @@ class MenuFileHandlers(QtCore.QObject):
                 if filename != '':
                     self.worker_task.emit({'fcn': self.open_gerber, 'params': [filename]})
 
-    def on_fileopenexcellon(self, signal, name=None):
+    def on_fileopenexcellon(self, signal, name=None):   # noqa
         """
         File menu callback for opening an Excellon file.
 
@@ -8514,10 +8526,10 @@ class MenuFileHandlers(QtCore.QObject):
             self.inform.emit('[WARNING_NOTCL] %s' % _("No object is selected."))
             msg = _("Please Select a Geometry object to export")
             msgbox = QtWidgets.QMessageBox()
-            msgbox.setIcon(QtWidgets.QMessageBox.Warning)
+            msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
 
             msgbox.setInformativeText(msg)
-            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.AcceptRole)
+            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
             msgbox.setDefaultButton(bt_ok)
             msgbox.exec_()
             return
@@ -8529,10 +8541,10 @@ class MenuFileHandlers(QtCore.QObject):
                 and not isinstance(obj, ExcellonObject)):
             msg = '[ERROR_NOTCL] %s' % _("Only Geometry, Gerber and CNCJob objects can be used.")
             msgbox = QtWidgets.QMessageBox()
-            msgbox.setIcon(QtWidgets.QMessageBox.Warning)
+            msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
 
             msgbox.setInformativeText(msg)
-            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.AcceptRole)
+            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
             msgbox.setDefaultButton(bt_ok)
             msgbox.exec_()
             return
@@ -8572,7 +8584,7 @@ class MenuFileHandlers(QtCore.QObject):
         data = None
         if self.app.is_legacy is False:
             image = _screenshot(alpha=False)
-            data = np.asarray(image)
+            data = np.asarray(image)    # noqa
             if not data.ndim == 3 and data.shape[-1] in (3, 4):
                 self.inform.emit('[[WARNING_NOTCL]] %s' % _('Data must be a 3D array with last dimension 3 or 4'))
                 return
@@ -8595,7 +8607,7 @@ class MenuFileHandlers(QtCore.QObject):
             return
         else:
             if self.app.is_legacy is False:
-                write_png(filename, data)
+                write_png(filename, data)   # noqa
             else:
                 self.app.plotcanvas.figure.savefig(filename)
 
@@ -8873,10 +8885,10 @@ class MenuFileHandlers(QtCore.QObject):
             self.inform.emit('[WARNING_NOTCL] %s' % _("No object is selected."))
             msg = _("Please Select a Geometry object to export")
             msgbox = QtWidgets.QMessageBox()
-            msgbox.setIcon(QtWidgets.QMessageBox.Warning)
+            msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
 
             msgbox.setInformativeText(msg)
-            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.AcceptRole)
+            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
             msgbox.setDefaultButton(bt_ok)
             msgbox.exec_()
             return
@@ -8885,10 +8897,10 @@ class MenuFileHandlers(QtCore.QObject):
         if not isinstance(obj, GeometryObject):
             msg = '[ERROR_NOTCL] %s' % _("Only Geometry objects can be used.")
             msgbox = QtWidgets.QMessageBox()
-            msgbox.setIcon(QtWidgets.QMessageBox.Warning)
+            msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
 
             msgbox.setInformativeText(msg)
-            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.AcceptRole)
+            bt_ok = msgbox.addButton(_('Ok'), QtWidgets.QMessageBox.ButtonRole.AcceptRole)
             msgbox.setDefaultButton(bt_ok)
             msgbox.exec_()
 
@@ -8994,11 +9006,11 @@ class MenuFileHandlers(QtCore.QObject):
                              "Do you want to Save the project?"))
             msgbox.setWindowTitle(_("Save changes"))
             msgbox.setWindowIcon(QtGui.QIcon(self.app.resource_location + '/save_as.png'))
-            msgbox.setIcon(QtWidgets.QMessageBox.Question)
+            msgbox.setIcon(QtWidgets.QMessageBox.Icon.Question)
 
-            bt_yes = msgbox.addButton(_('Yes'), QtWidgets.QMessageBox.YesRole)
-            bt_no = msgbox.addButton(_('No'), QtWidgets.QMessageBox.NoRole)
-            bt_cancel = msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.RejectRole)
+            bt_yes = msgbox.addButton(_('Yes'), QtWidgets.QMessageBox.ButtonRole.YesRole)
+            bt_no = msgbox.addButton(_('No'), QtWidgets.QMessageBox.ButtonRole.NoRole)
+            bt_cancel = msgbox.addButton(_('Cancel'), QtWidgets.QMessageBox.ButtonRole.RejectRole)
 
             msgbox.setDefaultButton(bt_yes)
             msgbox.exec_()
@@ -10490,7 +10502,7 @@ class MenuFileHandlers(QtCore.QObject):
         try:
             if filename:
                 f = QtCore.QFile(filename)
-                if f.open(QtCore.QIODevice.ReadOnly):
+                if f.open(QtCore.QIODevice.ReadOnly):   # noqa
                     stream = QtCore.QTextStream(f)
                     code_edited = stream.readAll()
                     self.app.text_editor_tab.load_text(code_edited, clear_text=True, move_to_start=True)

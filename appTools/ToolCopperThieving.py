@@ -22,7 +22,7 @@ from copy import deepcopy
 import numpy as np
 try:
     from collections import Iterable
-except ImportError:
+except Exception:
     from collections.abc import Iterable
 
 import gettext

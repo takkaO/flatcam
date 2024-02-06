@@ -879,11 +879,9 @@ class ExcellonObject(FlatCAMObj, Excellon):
 
         for tool in tools:
             if tooldia > self.tools[tool]["tooldia"]:
-                mseg = '[ERROR_NOTCL] %s %s: %s (tool = %s, hole = %s)' % (_("Milling tool for DRILLS is larger than hole size. Cancelled."),
+                mseg = '[ERROR_NOTCL] %s %s: %s' % (_("Milling tool for DRILLS is larger than hole size. Cancelled."),
                                                     _("Tool"),
-                                                    str(tool),
-						    str(tooldia),
-						    str(self.tools[tool]["tooldia"]))
+                                                    str(tool))
                 self.app.inform.emit(mseg)
                 return False, "Error: Milling tool is larger than hole."
 
@@ -922,6 +920,7 @@ class ExcellonObject(FlatCAMObj, Excellon):
                         geo_obj.solid_geometry.append(drill.buffer(0.0000001).exterior)
                     else:
                         geo_obj.solid_geometry.append(drill.buffer(buffer_value).exterior)
+
         if use_thread:
             def geo_thread(a_obj):
                 a_obj.app_obj.new_object("geometry", outname, geo_init, plot=plot)
@@ -965,7 +964,7 @@ class ExcellonObject(FlatCAMObj, Excellon):
             tools = self.get_selected_tools_list()
 
         if outname is None:
-            outname = self.options["name"] + "_slot"
+            outname = self.options["name"] + "_mill"
 
         if tooldia is None:
             tooldia = float(self.options["slot_tooldia"])
@@ -1039,7 +1038,7 @@ class ExcellonObject(FlatCAMObj, Excellon):
 
         if use_thread:
             def geo_thread(a_obj):
-                a_obj.app_obj.new_object("geometry", outname, geo_init, plot=plot)
+                a_obj.app_obj.new_object("geometry", outname + '_slot', geo_init, plot=plot)
 
             # Create a promise with the new name
             self.app.collection.promise(outname)
@@ -1047,7 +1046,7 @@ class ExcellonObject(FlatCAMObj, Excellon):
             # Send to worker
             self.app.worker_task.emit({'fcn': geo_thread, 'params': [self.app]})
         else:
-            self.app.app_obj.new_object("geometry", outname, geo_init, plot=plot)
+            self.app.app_obj.new_object("geometry", outname + '_slot', geo_init, plot=plot)
 
         return True, ""
 
@@ -1314,8 +1313,7 @@ class ExcellonObject(FlatCAMObj, Excellon):
                             break
                     if t:
                         fused_tools_dict[t]['drills'] += tool_dict['drills']
-                        if 'slots' in tool_dict and tool_dict['slots']:
-                                fused_tools_dict[t]['slots'] += tool_dict['slots']
+                        fused_tools_dict[t]['slots'] += tool_dict['slots']
                         fused_tools_dict[t]['solid_geometry'] += tool_dict['solid_geometry']
                 else:
                     fused_tools_dict[toolid] = tool_dict

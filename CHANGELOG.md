@@ -7,6 +7,15 @@ CHANGELOG for FlatCAM beta
 
 =================================================
 
+3.02.2023
+
+- minor fix in the panelization TclCommand
+
+15.01.2023
+
+- a number of fixes so the 8.994 version will work in current configurations
+- minor fixes
+
 7.11.2020
 
 - fixed a small issue in Excellon Editor that reset the delta coordinates on right mouse button click too, which was incorrect. Only left mouse button click should reset the delta coordinates.
