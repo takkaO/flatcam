@@ -236,7 +236,7 @@ msgstr "Tool Name"
 
 #: appDatabase.py:82
 msgid "Tool Description"
-msgstr "Tool Description"
+msgstr "工具概要"
 
 #: appDatabase.py:95
 msgid "Milling Parameters"
@@ -252,15 +252,15 @@ msgstr "Paint Parameters"
 
 #: appDatabase.py:134
 msgid "Isolation Parameters"
-msgstr "Isolation Parameters"
+msgstr "経路切削用パラメータ"
 
 #: appDatabase.py:147
 msgid "Drilling Parameters"
-msgstr "Drilling Parameters"
+msgstr "穴加工用パラメータ"
 
 #: appDatabase.py:160
 msgid "Cutout Parameters"
-msgstr "Cutout Parameters"
+msgstr "外形加工用パラメータ"
 
 #: appDatabase.py:210 appEditors/AppGeoEditor.py:3296 appGUI/ObjectUI.py:219
 #: appGUI/ObjectUI.py:570 appGUI/ObjectUI.py:894 appGUI/ObjectUI.py:1899
@@ -304,7 +304,7 @@ msgstr "ツール径"
 
 #: appDatabase.py:236
 msgid "Diameter Tolerance"
-msgstr "Diameter Tolerance"
+msgstr "工具径公差"
 
 #: appDatabase.py:238
 msgid ""
@@ -343,7 +343,7 @@ msgstr "The kind of Application Tool where this tool is to be used."
 #: appDatabase.py:278 appDatabase.py:1785 appDatabase.py:2191
 #: appGUI/MainGUI.py:1414 app_Main.py:7560
 msgid "General"
-msgstr "一般"
+msgstr "汎用"
 
 #: appDatabase.py:278 appDatabase.py:2194
 #: appGUI/preferences/excellon/ExcellonOptPrefGroupUI.py:55
@@ -360,7 +360,7 @@ msgstr "ドリル加工"
 #: appDatabase.py:278 appDatabase.py:600 appDatabase.py:2207
 #: appTools/ToolNCC.py:4173
 msgid "Isolation"
-msgstr "アイソレーション"
+msgstr "経路切削"
 
 #: appDatabase.py:278 appDatabase.py:2215 appEditors/AppGeoEditor.py:531
 #: appGUI/MainGUI.py:1621 appTools/ToolPaint.py:747
@@ -502,7 +502,7 @@ msgstr ""
 
 #: appDatabase.py:409 appDatabase.py:956
 msgid "MultiDepth"
-msgstr "MultiDepth"
+msgstr "多層切削"
 
 #: appDatabase.py:411
 msgid ""
@@ -516,15 +516,14 @@ msgstr ""
 
 #: appDatabase.py:422 appDatabase.py:972
 msgid "DPP"
-msgstr "DPP"
+msgstr "パス毎の切込量"
 
 #: appDatabase.py:424 appDatabase.py:974
 msgid ""
 "DPP. Depth per Pass.\n"
 "The value used to cut into material on each pass."
 msgstr ""
-"DPP. Depth per Pass.\n"
-"The value used to cut into material on each pass."
+"多層切削時の１回ごとの切り込み深さ量。"
 
 #: appDatabase.py:436 appDatabase.py:988 appGUI/ObjectUI.py:1247
 #: appGUI/ObjectUI.py:1650
@@ -666,7 +665,7 @@ msgstr ""
 
 #: appDatabase.py:566 appDatabase.py:1082
 msgid "Dwelltime"
-msgstr "Dwelltime"
+msgstr "遅延時間"
 
 #: appDatabase.py:568 appDatabase.py:1084
 msgid ""
@@ -1252,7 +1251,7 @@ msgstr "ハーフブリッジ"
 #: appDatabase.py:1203 appGUI/preferences/tools/ToolsCutoutPrefGroupUI.py:169
 #: appTools/ToolCutOut.py:2220
 msgid "Depth"
-msgstr "Depth"
+msgstr "ハーフブリッジ用深さ"
 
 #: appDatabase.py:1205 appGUI/preferences/tools/ToolsCutoutPrefGroupUI.py:171
 #: appTools/ToolCutOut.py:2222
@@ -1260,8 +1259,7 @@ msgid ""
 "The depth until the milling is done\n"
 "in order to thin the gaps."
 msgstr ""
-"The depth until the milling is done\n"
-"in order to thin the gaps."
+"ブリッジを薄くするとき（ハーフブリッジ）の加工深さ。"
 
 #: appDatabase.py:1224 appGUI/preferences/tools/ToolsCutoutPrefGroupUI.py:188
 #: appTools/ToolCutOut.py:2239
@@ -1276,12 +1274,12 @@ msgstr "The drill hole diameter when doing mouse bites."
 #: appTools/ToolCopperThieving.py:1431 appTools/ToolCopperThieving.py:1471
 #: appTools/ToolCopperThieving.py:1511 appTools/ToolCutOut.py:2249
 msgid "Spacing"
-msgstr "Spacing"
+msgstr "穴間隔"
 
 #: appDatabase.py:1237 appGUI/preferences/tools/ToolsCutoutPrefGroupUI.py:200
 #: appTools/ToolCutOut.py:2251
 msgid "The spacing between drill holes when doing mouse bites."
-msgstr "The spacing between drill holes when doing mouse bites."
+msgstr "Mouse bites を使用する場合の穴間隔。"
 
 #: appDatabase.py:1256 appGUI/preferences/tools/ToolsCutoutPrefGroupUI.py:233
 #: appTools/ToolCutOut.py:2051
@@ -1328,7 +1326,7 @@ msgstr ""
 
 #: appDatabase.py:1306
 msgid "Add Tool in DB"
-msgstr "Add Tool in DB"
+msgstr "工具をデータベースに追加"
 
 #: appDatabase.py:1309
 msgid ""
@@ -1342,7 +1340,7 @@ msgstr ""
 
 #: appDatabase.py:1323
 msgid "Delete Tool from DB"
-msgstr "Delete Tool from DB"
+msgstr "工具をデータベースから削除"
 
 #: appDatabase.py:1326
 msgid "Remove a selection of tools in the Tools Database."
@@ -1350,7 +1348,7 @@ msgstr "Remove a selection of tools in the Tools Database."
 
 #: appDatabase.py:1330
 msgid "Export DB"
-msgstr "Export DB"
+msgstr "データベースをエクスポート"
 
 #: appDatabase.py:1333
 msgid "Save the Tools Database to a custom text file."
@@ -1358,7 +1356,7 @@ msgstr "Save the Tools Database to a custom text file."
 
 #: appDatabase.py:1337
 msgid "Import DB"
-msgstr "Import DB"
+msgstr "データベースをインポート"
 
 #: appDatabase.py:1340
 msgid "Load the Tools Database information's from a custom text file."
@@ -1366,7 +1364,7 @@ msgstr "Load the Tools Database information's from a custom text file."
 
 #: appDatabase.py:1344
 msgid "Save DB"
-msgstr "Save DB"
+msgstr "データベースを保存"
 
 #: appDatabase.py:1347
 msgid "Save the Tools Database information's."
@@ -2104,7 +2102,7 @@ msgstr ""
 #: appObjects/FlatCAMObj.py:877 appTools/ToolCorners.py:574
 #: appTools/ToolProperties.py:571
 msgid "Length"
-msgstr "Length"
+msgstr "長さ"
 
 #: appEditors/AppExcEditor.py:4266
 #: appGUI/preferences/excellon/ExcellonEditorPrefGroupUI.py:164
@@ -2435,7 +2433,7 @@ msgstr "Selection"
 #: appGUI/preferences/tools/ToolsTransformPrefGroupUI.py:60
 #: appTools/ToolDblSided.py:695 appTools/ToolTransform.py:552
 msgid "Point"
-msgstr "Point"
+msgstr "座標"
 
 #: appEditors/AppGeoEditor.py:656 appEditors/AppGerberEditor.py:5757
 msgid "Minimum"
@@ -5213,7 +5211,7 @@ msgstr "Invert Gerber Tool"
 #: appGUI/MainGUI.py:1090 appGUI/MainGUI.py:2259 appGUI/MainGUI.py:4488
 #: appTools/ToolCorners.py:455
 msgid "Corner Markers Tool"
-msgstr "Corner Markers Tool"
+msgstr "角マーカーツール"
 
 #: appGUI/MainGUI.py:1092 appGUI/MainGUI.py:2261
 #: appTools/ToolEtchCompensation.py:80 appTools/ToolEtchCompensation.py:251
@@ -7478,7 +7476,7 @@ msgstr "Probe Feedrate"
 #: appGUI/preferences/cncjob/CNCJobAdvOptPrefGroupUI.py:71
 #: appGUI/preferences/tools/Tools2FiducialsPrefGroupUI.py:76
 msgid "Mode"
-msgstr "Mode"
+msgstr "モード"
 
 #: appGUI/ObjectUI.py:2194
 #: appGUI/preferences/cncjob/CNCJobAdvOptPrefGroupUI.py:72
@@ -7651,7 +7649,7 @@ msgstr "Each jog action will move the axes with this value."
 #: appGUI/preferences/cncjob/CNCJobGenPrefGroupUI.py:89
 #: appObjects/FlatCAMObj.py:831 appTools/ToolProperties.py:525
 msgid "Feedrate"
-msgstr "Feedrate"
+msgstr "送り量"
 
 #: appGUI/ObjectUI.py:2499
 #: appGUI/preferences/cncjob/CNCJobAdvOptPrefGroupUI.py:187
@@ -8071,12 +8069,12 @@ msgstr ""
 
 #: appGUI/preferences/cncjob/CNCJobGenPrefGroupUI.py:73
 msgid "G-code Decimals"
-msgstr "G-code Decimals"
+msgstr "G-code 精度"
 
 #: appGUI/preferences/cncjob/CNCJobGenPrefGroupUI.py:76
 #: appTools/ToolFiducials.py:711
 msgid "Coordinates"
-msgstr "Coordinates"
+msgstr "座標"
 
 #: appGUI/preferences/cncjob/CNCJobGenPrefGroupUI.py:78
 msgid ""
@@ -9022,7 +9020,7 @@ msgstr "SHIFT"
 
 #: appGUI/preferences/general/GeneralAPPSetGroupUI.py:379
 msgid "Delete object confirmation"
-msgstr "Delete object confirmation"
+msgstr "オブジェクト削除時に確認する"
 
 #: appGUI/preferences/general/GeneralAPPSetGroupUI.py:381
 msgid ""
@@ -9951,7 +9949,7 @@ msgstr ""
 #: appTools/ToolProperties.py:483 appTools/ToolProperties.py:490
 #: appTools/ToolProperties.py:493
 msgid "None"
-msgstr "None"
+msgstr "なし"
 
 #: appGUI/preferences/gerber/GerberAdvOptPrefGroupUI.py:77
 msgid "Delayed Buffering"
@@ -10576,14 +10574,14 @@ msgstr ""
 #: appTools/ToolCalibration.py:854 appTools/ToolCorners.py:504
 #: appTools/ToolFilm.py:1070 app_Main.py:5127
 msgid "Top Left"
-msgstr "Top Left"
+msgstr "左上"
 
 #: appGUI/preferences/tools/Tools2CalPrefGroupUI.py:132
 #: appGUI/preferences/tools/ToolsFilmPrefGroupUI.py:176
 #: appTools/ToolCalibration.py:855 appTools/ToolCorners.py:516
 #: appTools/ToolFilm.py:1071 app_Main.py:5128
 msgid "Bottom Right"
-msgstr "Bottom Right"
+msgstr "右下"
 
 #: appGUI/preferences/tools/Tools2EDrillsPrefGroupUI.py:27
 msgid "Extract Drills Options"
@@ -10780,7 +10778,7 @@ msgstr ""
 #: appGUI/preferences/tools/Tools2FiducialsPrefGroupUI.py:73
 #: appTools/ToolFiducials.py:829
 msgid "Auto"
-msgstr "Auto"
+msgstr "自動"
 
 #: appGUI/preferences/tools/Tools2FiducialsPrefGroupUI.py:78
 #: appTools/ToolFiducials.py:834
@@ -10825,7 +10823,7 @@ msgstr ""
 #: appGUI/preferences/tools/ToolsCornersPrefGroupUI.py:49
 #: appTools/ToolCorners.py:553 appTools/ToolFiducials.py:864
 msgid "Cross"
-msgstr "Cross"
+msgstr "十字"
 
 #: appGUI/preferences/tools/Tools2FiducialsPrefGroupUI.py:109
 #: appTools/ToolFiducials.py:865
@@ -11327,7 +11325,7 @@ msgstr ""
 #: appGUI/preferences/tools/ToolsCornersPrefGroupUI.py:96
 #: appTools/ToolCorners.py:628 appTools/ToolDblSided.py:827
 msgid "Drill Dia"
-msgstr "Drill Dia"
+msgstr "ドリル径"
 
 #: appGUI/preferences/tools/Tools2sidedPrefGroupUI.py:49
 #: appTools/ToolDblSided.py:829 appTools/ToolDblSided.py:834
@@ -11353,12 +11351,12 @@ msgstr "Mirror Axis"
 #: appGUI/preferences/tools/Tools2sidedPrefGroupUI.py:86
 #: appTools/ToolDblSided.py:696
 msgid "Box"
-msgstr "Box"
+msgstr "矩形"
 
 #: appGUI/preferences/tools/Tools2sidedPrefGroupUI.py:87
 #: appTools/ToolDblSided.py:697
 msgid "Hole Snap"
-msgstr "Hole Snap"
+msgstr "ドリル穴中心"
 
 #: appGUI/preferences/tools/Tools2sidedPrefGroupUI.py:90
 msgid "Axis Ref"
@@ -11517,7 +11515,7 @@ msgstr "Shape of the marker."
 #: appGUI/preferences/tools/ToolsCornersPrefGroupUI.py:48
 #: appTools/ToolCorners.py:552
 msgid "Semi-Cross"
-msgstr "Semi-Cross"
+msgstr "L字"
 
 #: appGUI/preferences/tools/ToolsCornersPrefGroupUI.py:58
 #: appTools/ToolCorners.py:562
@@ -11598,16 +11596,16 @@ msgid ""
 "- 2tb  - 2*top + 2*bottom\n"
 "- 8     - 2*left + 2*right +2*top + 2*bottom"
 msgstr ""
-"Number of gaps used for the cutout.\n"
-"There can be maximum 8 bridges/gaps.\n"
-"The choices are:\n"
-"- None  - no gaps\n"
-"- lr    - left + right\n"
-"- tb    - top + bottom\n"
-"- 4     - left + right +top + bottom\n"
-"- 2lr   - 2*left + 2*right\n"
-"- 2tb  - 2*top + 2*bottom\n"
-"- 8     - 2*left + 2*right +2*top + 2*bottom"
+"外形加工時に残すブリッジの数を指定します。\n"
+"最大で８個のブリッジを作ることができます。\n"
+"設定値は以下の通りです:\n"
+"- なし  - ブリッジを残しません\n"
+"- LR    - 左右に１つずつ残します\n"
+"- TB    - 上下に１つずつ残します\n"
+"- 4     - 上下左右に１つずつ残します\n"
+"- 2LR   - 左右に２つずつ残します\n"
+"- 2TB   - 上下に２つずつ残します\n"
+"- 8     - 上下左右に２つずつ残します"
 
 #: appGUI/preferences/tools/ToolsCutoutPrefGroupUI.py:240
 #: appTools/ToolCutOut.py:2350
@@ -11876,7 +11874,7 @@ msgstr ""
 #: appTools/ToolCorners.py:512 appTools/ToolFiducials.py:723
 #: appTools/ToolFilm.py:1069 app_Main.py:5126
 msgid "Bottom Left"
-msgstr "Bottom Left"
+msgstr "左下"
 
 #: appGUI/preferences/tools/ToolsFilmPrefGroupUI.py:177
 #: appTools/ToolFilm.py:1072
@@ -14260,15 +14258,15 @@ msgstr "Locations where to place corner markers."
 
 #: appTools/ToolCorners.py:508 appTools/ToolFiducials.py:735 app_Main.py:5129
 msgid "Top Right"
-msgstr "Top Right"
+msgstr "右上"
 
 #: appTools/ToolCorners.py:525
 msgid "Toggle ALL"
-msgstr "Toggle ALL"
+msgstr "全選択切り替え"
 
 #: appTools/ToolCorners.py:605
 msgid "Add Marker"
-msgstr "Add Marker"
+msgstr "マーカーを追加"
 
 #: appTools/ToolCorners.py:608
 msgid "Will add corner markers to the selected Gerber file."
@@ -14676,7 +14674,7 @@ msgstr ""
 
 #: appTools/ToolDblSided.py:663
 msgid "Mirror Operation"
-msgstr "Mirror Operation"
+msgstr "反転操作"
 
 #: appTools/ToolDblSided.py:664
 msgid "Parameters for the mirror operation"
@@ -16220,7 +16218,7 @@ msgstr "Gerber distances"
 
 #: appTools/ToolOptimal.py:543
 msgid "Points coordinates"
-msgstr "Points coordinates"
+msgstr "座標"
 
 #: appTools/ToolOptimal.py:575
 msgid "Find Minimum"
